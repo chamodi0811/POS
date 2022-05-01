@@ -38,7 +38,7 @@ public class CustomerDAOImpl {
         return pstm.executeUpdate() > 0;
     }
 
-
+    //update customer
     public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
