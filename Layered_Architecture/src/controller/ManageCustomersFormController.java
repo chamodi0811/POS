@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,7 +31,7 @@ import java.util.List;
  * @since : 0.1.0
  **/
 
-public class ManageCustomersFormController {
+public class ManageCustomersFormController  {
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;
@@ -67,12 +68,14 @@ public class ManageCustomersFormController {
         loadAllCustomers();
     }
 
-    private void loadAllCustomers() {
+    public void loadAllCustomers() {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            //tight coupling
+           // CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            //loose coupling
+            CustomerDAO customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomers = customerDAO.getAllCustomers();
 
             for (CustomerDTO customer : allCustomers) {
@@ -147,8 +150,8 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-
-                CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+                //loose coupling
+                CustomerDAO customerDAO = new CustomerDAOImpl();
                 customerDAO.saveCustomer(new CustomerDTO(id, name, address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -167,7 +170,8 @@ public class ManageCustomersFormController {
                 }
 
                 //Customer update
-                CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+                //loose coupling
+                CustomerDAO customerDAO = new CustomerDAOImpl();
                 customerDAO.updateCustomer(new CustomerDTO(id, name, address));
 
 
@@ -188,7 +192,8 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        //loose coupling
+        CustomerDAO customerDAO = new CustomerDAOImpl();
         return customerDAO.existCustomer(id);
     }
 
@@ -201,7 +206,8 @@ public class ManageCustomersFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
 
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            //loose coupling
+           CustomerDAO customerDAO = new CustomerDAOImpl();
             customerDAO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -218,7 +224,8 @@ public class ManageCustomersFormController {
     private String generateNewId() {
         try {
 
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            //loose coupling
+            CustomerDAO customerDAO = new CustomerDAOImpl();
             return customerDAO.generateNewID();
 
         } catch (SQLException e) {
