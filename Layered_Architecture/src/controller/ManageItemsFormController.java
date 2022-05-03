@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.ItemDAO;
 import dao.ItemDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
@@ -76,7 +77,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
+            ItemDAO itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems = itemDAO.getAllItems();
             for (ItemDTO item : allItems) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -141,7 +142,7 @@ public class ManageItemsFormController {
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
             pstm.setString(1, code);
             pstm.executeUpdate();*/
-            ItemDAOImpl itemDAO=new ItemDAOImpl();
+            ItemDAO itemDAO=new ItemDAOImpl();
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -189,7 +190,7 @@ public class ManageItemsFormController {
                // pstm.setBigDecimal(3, unitPrice);
                // pstm.setInt(4, qtyOnHand);
                // pstm.executeUpdate();
-                ItemDAOImpl itemDAO=new ItemDAOImpl();
+                ItemDAO itemDAO=new ItemDAOImpl();
                 itemDAO.saveItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -206,7 +207,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
 
-                ItemDAOImpl itemDAO= new ItemDAOImpl();
+                ItemDAO itemDAO= new ItemDAOImpl();
                 itemDAO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
@@ -238,7 +239,7 @@ public class ManageItemsFormController {
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
-        ItemDAOImpl itemDAO=new ItemDAOImpl();
+        ItemDAO itemDAO=new ItemDAOImpl();
         return itemDAO.existItem(code);
     }
 
@@ -254,7 +255,7 @@ public class ManageItemsFormController {
             } else {
                 return "I00-001";
             }*/
-            ItemDAOImpl itemDAO=new ItemDAOImpl();
+            ItemDAO itemDAO=new ItemDAOImpl();
             return itemDAO.generateNewId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
