@@ -41,6 +41,7 @@ public class ManageItemsFormController {
     public TableView<ItemTM> tblItems;
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
+    private ItemDAO itemDAO=new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -77,7 +78,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ItemDAO itemDAO = new ItemDAOImpl();
+            //ItemDAO itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems = itemDAO.getAllItems();
             for (ItemDTO item : allItems) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -142,7 +143,7 @@ public class ManageItemsFormController {
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
             pstm.setString(1, code);
             pstm.executeUpdate();*/
-            ItemDAO itemDAO=new ItemDAOImpl();
+           // ItemDAO itemDAO=new ItemDAOImpl();
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -190,7 +191,7 @@ public class ManageItemsFormController {
                // pstm.setBigDecimal(3, unitPrice);
                // pstm.setInt(4, qtyOnHand);
                // pstm.executeUpdate();
-                ItemDAO itemDAO=new ItemDAOImpl();
+                //ItemDAO itemDAO=new ItemDAOImpl();
                 itemDAO.saveItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -207,7 +208,7 @@ public class ManageItemsFormController {
                 }
                 /*Update Item*/
 
-                ItemDAO itemDAO= new ItemDAOImpl();
+               // ItemDAO itemDAO= new ItemDAOImpl();
                 itemDAO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
                 /*Connection connection = DBConnection.getDbConnection().getConnection();
@@ -239,7 +240,7 @@ public class ManageItemsFormController {
         PreparedStatement pstm = connection.prepareStatement("SELECT code FROM Item WHERE code=?");
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
-        ItemDAO itemDAO=new ItemDAOImpl();
+        //ItemDAO itemDAO=new ItemDAOImpl();
         return itemDAO.existItem(code);
     }
 
@@ -255,7 +256,7 @@ public class ManageItemsFormController {
             } else {
                 return "I00-001";
             }*/
-            ItemDAO itemDAO=new ItemDAOImpl();
+
             return itemDAO.generateNewId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
