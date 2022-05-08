@@ -2,7 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.CustomerDAO;
+import dao.CrudDAO;
 import dao.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -41,7 +41,7 @@ public class ManageCustomersFormController  {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
     //property injection(DI)
-    private CustomerDAO customerDAO = new CustomerDAOImpl();
+    private CrudDAO customerDAO = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -78,7 +78,7 @@ public class ManageCustomersFormController  {
            // CustomerDAOImpl customerDAO = new CustomerDAOImpl();
             //loose coupling
             //CustomerDAO customerDAO = new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomers = customerDAO.getAllCustomers();
+            ArrayList<CustomerDTO> allCustomers = customerDAO.getAll();
 
             for (CustomerDTO customer : allCustomers) {
                 tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -154,7 +154,7 @@ public class ManageCustomersFormController  {
                 }
                 //loose coupling
 
-                customerDAO.saveCustomer(new CustomerDTO(id, name, address));
+                customerDAO.save(new CustomerDTO(id, name, address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -174,7 +174,7 @@ public class ManageCustomersFormController  {
                 //Customer update
                 //loose coupling
 
-                customerDAO.updateCustomer(new CustomerDTO(id, name, address));
+                customerDAO.update(new CustomerDTO(id, name, address));
 
 
             } catch (SQLException e) {
@@ -196,7 +196,7 @@ public class ManageCustomersFormController  {
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         //loose coupling
 
-        return customerDAO.existCustomer(id);
+        return customerDAO.exist(id);
     }
 
 
@@ -210,7 +210,7 @@ public class ManageCustomersFormController  {
 
             //loose coupling
 
-            customerDAO.deleteCustomer(id);
+            customerDAO.delete(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();

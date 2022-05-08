@@ -1,6 +1,5 @@
 package dao;
 
-import db.DBConnection;
 import model.CustomerDTO;
 
 import java.sql.*;
@@ -11,9 +10,39 @@ import java.util.ArrayList;
  * @since : 0.1.0
  **/
 
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
+    @Override
+    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 
     @Override
+    public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exist(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+
+ /*   @Override
     public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
        // Connection connection = DBConnection.getDbConnection().getConnection();
        // Statement stm = connection.createStatement();
@@ -39,12 +68,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         pstm.setString(2, dto.getName());
         pstm.setString(3, dto.getAddress());
         return pstm.executeUpdate() > 0;*/
-       return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
-    }
+       //return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
+  //  }
 
 
     //update customer
-    @Override
+   /* @Override
     public boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
@@ -52,32 +81,34 @@ public class CustomerDAOImpl implements CustomerDAO {
         pstm.setString(2, dto.getAddress());
         pstm.setString(3, dto.getId());
         return pstm.executeUpdate() > 0;*/
-        return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?",dto.getName(),dto.getAddress(),dto.getId());
-    }
+       // return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?",dto.getName(),dto.getAddress(),dto.getId());
+   // }
 
 
-    @Override
+  /*  @Override
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
        /* Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);
         return pstm.executeQuery().next();*/
-        ResultSet rst=SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?",id);
-        return rst.next();
-
-    }
+      //  ResultSet rst=SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?",id);
 
 
-    @Override
+    //  return rst.next();
+
+  //  }
+
+
+   /* @Override
     public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
         /*Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
         pstm.setString(1, id);
         return pstm.executeUpdate() > 0;*/
-        return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id);
-    }
+        //return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id);
+   // }
 
-    @Override
+  /*  @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
        // Connection connection = DBConnection.getDbConnection().getConnection();
        // ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
@@ -89,7 +120,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         } else {
             return "C00-001";
         }
-    }
+    }*/
 
 
 }
