@@ -1,5 +1,6 @@
-package dao;
+package dao.custom.Impl;
 
+import dao.custom.CustomerDAO;
 import model.CustomerDTO;
 
 import java.sql.*;
@@ -10,8 +11,44 @@ import java.util.ArrayList;
  * @since : 0.1.0
  **/
 
-public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
+public class CustomerDAOImpl implements CustomerDAO {
+
     @Override
+    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(CustomerDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public CustomerDTO Search(String s) throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean exist(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String s) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+}
+  /*  @Override
     public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer");
         ArrayList<CustomerDTO> allCustomers = new ArrayList<>();
@@ -93,8 +130,8 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
         pstm.setString(2, dto.getName());
         pstm.setString(3, dto.getAddress());
         return pstm.executeUpdate() > 0;*/
-       //return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
-  //  }
+    //return SQLUtil.executeUpdate("INSERT INTO Customer (id,name, address) VALUES (?,?,?)",dto.getId(),dto.getName(),dto.getAddress());
+    //  }
 
 
     //update customer
@@ -106,8 +143,8 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
         pstm.setString(2, dto.getAddress());
         pstm.setString(3, dto.getId());
         return pstm.executeUpdate() > 0;*/
-       // return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?",dto.getName(),dto.getAddress(),dto.getId());
-   // }
+    // return SQLUtil.executeUpdate("UPDATE Customer SET name=?, address=? WHERE id=?",dto.getName(),dto.getAddress(),dto.getId());
+    // }
 
 
   /*  @Override
@@ -116,12 +153,12 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
         PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
         pstm.setString(1, id);
         return pstm.executeQuery().next();*/
-      //  ResultSet rst=SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?",id);
+    //  ResultSet rst=SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?",id);
 
 
     //  return rst.next();
 
-  //  }
+    //  }
 
 
    /* @Override
@@ -130,8 +167,8 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
         pstm.setString(1, id);
         return pstm.executeUpdate() > 0;*/
-        //return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id);
-   // }
+    //return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id);
+    // }
 
   /*  @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
@@ -144,7 +181,10 @@ public class CustomerDAOImpl implements CrudDAO<CustomerDTO,String> {
             return String.format("C00-%03d", newCustomerId);
         } else {
             return "C00-001";
-        }
-    }*/
+        }/*
+    }
+
+   */
+
 
 
