@@ -1,9 +1,9 @@
 package controller;
 
+import bo.custom.CustomerBO;
+import bo.custom.Impl.CustomerBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.CrudDAO;
-import dao.custom.Impl.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +41,8 @@ public class ManageCustomersFormController  {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
     //property injection(DI)
-    private CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
+    private final CustomerBO customerBO = new CustomerBOImpl();
+    //private CrudDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -78,7 +79,9 @@ public class ManageCustomersFormController  {
            // CustomerDAOImpl customerDAO = new CustomerDAOImpl();
             //loose coupling
             //CustomerDAO customerDAO = new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomers = customerDAO.getAll();
+        //   CustomerBO customerBO = new CustomerBOImpl();
+            ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
+           // ArrayList<CustomerDTO> allCustomers = customerDAO.getAll();
 
             for (CustomerDTO customer : allCustomers) {
                 tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -154,7 +157,9 @@ public class ManageCustomersFormController  {
                 }
                 //loose coupling
 
-                customerDAO.save(new CustomerDTO(id, name, address));
+                //CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.saveCustomer(new CustomerDTO(id, name, address));
+               // customerDAO.save(new CustomerDTO(id, name, address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -174,7 +179,9 @@ public class ManageCustomersFormController  {
                 //Customer update
                 //loose coupling
 
-                customerDAO.update(new CustomerDTO(id, name, address));
+               // CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.updateCustomer(new CustomerDTO(id, name, address));
+               // customerDAO.update(new CustomerDTO(id, name, address));
 
 
             } catch (SQLException e) {
@@ -196,7 +203,9 @@ public class ManageCustomersFormController  {
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         //loose coupling
 
-        return customerDAO.exist(id);
+        //CustomerBOImpl customerBO = new CustomerBOImpl();
+       return customerBO.customerExist(id);
+       // return customerDAO.exist(id);
     }
 
 
@@ -210,7 +219,9 @@ public class ManageCustomersFormController  {
 
             //loose coupling
 
-            customerDAO.delete(id);
+            //CustomerBOImpl customerBO = new CustomerBOImpl();
+            customerBO.deleteCustomer(id);
+            //customerDAO.delete(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -228,7 +239,9 @@ public class ManageCustomersFormController  {
 
             //loose coupling
 
-            return customerDAO.generateNewID();
+           // CustomerBOImpl customerBO = new CustomerBOImpl();
+           return customerBO.generateNewCustomerID();
+           // return customerDAO.generateNewID();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
